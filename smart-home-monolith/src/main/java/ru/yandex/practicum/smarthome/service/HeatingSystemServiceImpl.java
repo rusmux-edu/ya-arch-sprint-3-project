@@ -10,7 +10,7 @@ import ru.yandex.practicum.smarthome.repository.HeatingSystemRepository;
 @RequiredArgsConstructor
 public class HeatingSystemServiceImpl implements HeatingSystemService {
     private final HeatingSystemRepository heatingSystemRepository;
-    
+
     @Override
     public HeatingSystemDto getHeatingSystem(Long id) {
         HeatingSystem heatingSystem = heatingSystemRepository.findById(id)

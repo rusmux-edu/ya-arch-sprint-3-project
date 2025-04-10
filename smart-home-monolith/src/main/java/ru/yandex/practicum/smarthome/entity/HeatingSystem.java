@@ -15,10 +15,10 @@ public class HeatingSystem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
     private boolean isOn;
-    
+
     @Column(nullable = false)
     private double targetTemperature;
 
