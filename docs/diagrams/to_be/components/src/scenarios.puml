@@ -1,0 +1,25 @@
+@startuml
+title Warm House Scenarios Component Diagram
+
+left to right direction
+
+!include <C4/C4_Component>
+
+Container_Boundary(system, "Scenarios") {
+  Container(WebApp, "Web Application", "Java, Spring Boot", "Handles user interactions")
+  ContainerDb(db, "Database", "MongoDB", "Stores scenarios data")
+  ContainerDb(cache, "Cache", "Redis", "Caches scenarios data")
+}
+
+Container(WebApp, "Web Application", "Java, Spring Boot") {
+  Component(controller, "ScenariosController", "Handles scenarios management requests")
+  Component(service_layer, "Service Layer", "Business logic")
+  Component(repository_layer, "Repository Layer", "Data access logic")
+}
+
+Rel(controller, service_layer, "Calls business logic")
+Rel(service_layer, repository_layer, "Reads/Writes data")
+Rel(repository_layer, db, "Reads/Writes scenarios data")
+Rel(repository_layer, cache, "Caches scenarios data")
+
+@enduml

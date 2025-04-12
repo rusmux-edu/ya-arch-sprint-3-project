@@ -21,7 +21,7 @@ repos:
       - id: destroyed-symlinks
       - id: trailing-whitespace
       - id: end-of-file-fixer
-        exclude: charts/.*/README\.md$
+        exclude: charts/.*/README\.md$|docs/diagrams/.*/.*\.svg$
       - id: pretty-format-json
         args: [--autofix, --no-ensure-ascii]
       - id: detect-aws-credentials

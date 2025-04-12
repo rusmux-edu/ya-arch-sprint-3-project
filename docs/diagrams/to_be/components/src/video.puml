@@ -1,0 +1,23 @@
+@startuml
+title Warm House Video Surveillance Component Diagram
+
+left to right direction
+
+!include <C4/C4_Component>
+
+Container_Boundary(system, "Video Surveillance") {
+  Container(WebApp, "Web Application", "Java, Spring Boot", "Stream and store video from cameras")
+  ContainerDb(s3, "S3", "MinIO", "Stores video data")
+}
+
+Container(WebApp, "Web Application", "Java, Spring Boot") {
+  Component(controller, "VideoController", "Handles video streaming and storage requests")
+  Component(service_layer, "Service Layer", "Stream and store video data")
+  Component(repository_layer, "Repository Layer", "Data access logic")
+}
+
+Rel(controller, service_layer, "Requests video stream or recording")
+Rel(service_layer, repository_layer, "Reads/Writes video data")
+Rel(repository_layer, s3, "Reads/Writes video data")
+
+@enduml

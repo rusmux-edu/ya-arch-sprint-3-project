@@ -8,8 +8,8 @@ indent_style = space
 indent_size = 4
 charset = utf-8
 
-[{*.json,*.yaml,*.yml,*.sh,*.md,*.conf,Chart.lock,*.tf}]
+[{*.json,*.yaml,*.yml,*.sh,*.md,*.conf,Chart.lock,*.tf,*.puml}]
 indent_size = 2
 
-[{NOTES.txt,pom.xml}]
+[{NOTES.txt,pom.xml,C4.puml}]
 indent_size = unset

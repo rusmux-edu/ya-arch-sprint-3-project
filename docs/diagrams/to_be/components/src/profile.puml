@@ -1,0 +1,23 @@
+@startuml
+title Warm House User Profile Component Diagram
+
+left to right direction
+
+!include <C4/C4_Component>
+
+Container_Boundary(system, "User Profile") {
+  Container(WebApp, "Web Application", "Java, Spring Boot", "Handles user interactions")
+  ContainerDb(db, "Database", "PostgreSQL", "Stores user data and schedules")
+}
+
+Container(WebApp, "Web Application", "Java, Spring Boot") {
+  Component(controller, "ProfileController", "Handles user profile and preferences")
+  Component(service_layer, "Service Layer", "Business logic")
+  Component(repository_layer, "Repository Layer", "Data access logic")
+}
+
+Rel(controller, service_layer, "Calls business logic")
+Rel(service_layer, repository_layer, "Reads/Writes data")
+Rel(repository_layer, db, "Reads/Writes user data")
+
+@enduml
