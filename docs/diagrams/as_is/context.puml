@@ -1,0 +1,18 @@
+@startuml
+title Warm House Context Diagram
+
+left to right direction
+
+!include <C4/C4_Context>
+
+Person(user, "User", "A user of the smart home system")
+Person(support, "Support", "Support team to connect new devices")
+System(system, "Warm House System", "Smart home system for managing IoT devices")
+
+System_Ext(iot, "IoT Devices", "External IoT devices for home automation")
+
+Rel(user, system, "Manage IoT devices", "HTTPS")
+Rel(support, system, "Connect new devices to the system", "HANDS")
+Rel(system, iot, "Manage IoT devices, get telemetry")
+
+@enduml

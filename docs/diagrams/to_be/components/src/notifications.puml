@@ -1,0 +1,23 @@
+@startuml
+title Warm House Notifications Component Diagram
+
+left to right direction
+
+!include <C4/C4_Component>
+
+Container_Boundary(system, "Notifications") {
+  Container(app, "Application", "Java, Spring Boot, Kafka", "Send notifications to users")
+  ContainerDb(db, "Database", "PostgreSQL", "Stores notifications data")
+}
+
+Container(app, "Application", "Java, Spring Boot, MQTT, Kafka") {
+  Component(consumer, "NotificationsConsumer", "Receives notification events")
+  Component(service_layer, "Service Layer", "Business logic")
+  Component(repository_layer, "Repository Layer", "Data access logic")
+}
+
+Rel(consumer, service_layer, "Calls business logic")
+Rel(service_layer, repository_layer, "Reads/Writes data")
+Rel(repository_layer, db, "Reads/Writes notifications data")
+
+@enduml

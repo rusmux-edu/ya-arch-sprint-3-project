@@ -1,4 +1,3 @@
-
 resource "kubernetes_deployment" "hello_world" {
   metadata {
     name      = "hello-world"

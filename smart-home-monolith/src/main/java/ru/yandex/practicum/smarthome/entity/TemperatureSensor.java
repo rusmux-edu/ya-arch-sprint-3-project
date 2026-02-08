@@ -17,10 +17,10 @@ public class TemperatureSensor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
     private double currentTemperature;
-    
+
     @Column(nullable = false)
     private LocalDateTime lastUpdated;
 }

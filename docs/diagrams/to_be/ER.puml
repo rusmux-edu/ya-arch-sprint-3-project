@@ -1,0 +1,47 @@
+@startuml
+title Warm House ER Diagram
+
+entity "Family" {
+* id: UUID
+--
+* owner_id: UUID
+}
+
+entity "User" {
+* id: UUID
+--
+* family_id: UUID
+* name: string
+* surname: string
+* email: string
+* password_hash: string
+* avatar: string
+}
+
+entity "IoT Device" {
+* id: UUID
+--
+* family_id: UUID
+* name: string
+* type: string
+* address: string
+* protocol: string
+* configuration: JSON
+}
+
+entity "Scenario" {
+* id: UUID
+--
+* family_id: UUID
+* name: string
+* description: string
+* scenario: string
+* enabled: boolean
+}
+
+'User::family_id --> Family::id
+Family --> User
+Family --> "IoT Device"
+Family --> Scenario
+
+@enduml

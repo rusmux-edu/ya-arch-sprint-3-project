@@ -1,0 +1,45 @@
+@startuml
+title Warm House Container Diagram
+
+left to right direction
+
+!include <C4/C4_Container>
+
+Person(user, "User", "A user of the smart home system")
+System(system, "Warm House System", "Smart home system for managing IoT devices")
+
+System_Ext(iot, "IoT Devices", "External IoT devices for home automation")
+
+Container_Boundary(system, "Warm House System") {
+    Container(api_gateway, "API Gateway", "Apache APISIX", "Requests routing, authentication, authorization")
+    Container(iam, "IAM", "Keycloak, PostgreSQL", "Registration, authentication and authorization")
+    Container(profile, "User Profile", "Java, Spring Boot, PostgreSQL", "Handle user profiles and preferences")
+    Container(devices, "Devices", "Java, Spring Boot, MongoDB, Redis", "Add, remove and update IoT devices")
+    Container(metrics, "Metrics", "Java, Spring Boot, InfluxDB, Redis", "Store data from IoT devices and send change events")
+    Container(monitoring, "Monitoring", "Java, Spring Boot", "Monitor and update IoT devices")
+    Container(scenarios, "Scenarios", "Java, Spring Boot, PostgreSQL, Redis", "Create and manage scenarios for IoT devices")
+    Container(scenarios_engine, "Scenarios Engine", "Java, Spring Boot, Node-RED", "Monitor events, evaluate conditions and execute scenarios")
+    Container(video, "Video Surveillance", "Java, Spring Boot, S3", "Stream and store video from cameras")
+    Container(notifications, "Notifications", "Java, Spring Boot, PostgreSQL", "Send notifications to users")
+}
+
+Rel(user, api_gateway, "Send requests to manage devices", "HTTPS")
+Rel(api_gateway, iam, "Authenticate and authorize requests", "HTTPS")
+Rel(api_gateway, profile, "Manage user profiles", "HTTPS")
+Rel(api_gateway, devices, "Manage devices", "HTTPS")
+Rel(api_gateway, scenarios, "Manage scenarios", "HTTPS")
+Rel(api_gateway, video, "Stream video to the user", "RTSP, HLS")
+
+Rel(monitoring, metrics, "Get device data", "InfluxDB, Redis")
+Rel(monitoring, devices, "Get device status", "MongoDB, Redis")
+Rel(monitoring, iot, "Send commands to IoT devices", "MQTT")
+Rel(iot, metrics, "Send device data to the system", "MQTT")
+Rel(monitoring, notifications, "Send notifications about device status changes", "Apache Kafka")
+Rel(notifications, user, "Send notifications to the user", "SMTP, HTTPS, Push")
+
+Rel(metrics, scenarios_engine, "Send events to scenarios engine", "Apache Kafka")
+Rel(scenarios_engine, scenarios, "Get scenarios for execution", "PostgreSQL, Redis")
+Rel(scenarios_engine, metrics, "Get device data for condition check", "InfluxDB, Redis")
+Rel(scenarios_engine, devices, "Update device states when executing scenarios", "Apache Kafka")
+
+@enduml

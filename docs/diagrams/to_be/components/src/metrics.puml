@@ -1,0 +1,27 @@
+@startuml
+title Warm House Metrics Component Diagram
+
+left to right direction
+
+!include <C4/C4_Component>
+
+Container_Boundary(system, "Metrics") {
+  Container(app, "Application", "Java, Spring Boot, MQTT, Kafka", "Store data from IoT devices and send change events")
+  ContainerDb(db, "Database", "InfluxDB", "Stores telemetry data")
+  ContainerDb(cache, "Cache", "Redis", "Caches telemetry data")
+}
+
+Container(app, "Application", "Java, Spring Boot, MQTT, Kafka") {
+  Component(consumer, "MetricsConsumer", "Receives and parses incoming device data")
+  Component(service_layer, "Service Layer", "Processes and aggregates the data")
+  Component(publisher, "Event Publisher", "Publishes change events to Kafka")
+  Component(repository_layer, "Repository Layer", "Data access logic")
+}
+
+Rel(consumer, service_layer, "Calls business logic")
+Rel(service_layer, repository_layer, "Reads/Writes data")
+Rel(service_layer, publisher, "Sends change events")
+Rel(repository_layer, db, "Reads/Writes telemetry data")
+Rel(repository_layer, cache, "Caches telemetry data")
+
+@enduml

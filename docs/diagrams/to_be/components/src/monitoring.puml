@@ -1,0 +1,21 @@
+@startuml
+title Warm House Monitoring Component Diagram
+
+left to right direction
+
+!include <C4/C4_Component>
+
+Container_Boundary(system, "Monitoring") {
+  Container(app, "Application", "Java, Spring Boot, MQTT, Kafka", "Monitor and update IoT devices")
+}
+
+Container(app, "Application", "Java, Spring Boot, MQTT, Kafka") {
+  Component(consumer, "MonitoringConsumer", "Receives devices change events")
+  Component(service_layer, "Service Layer", "Check devices status and send commands")
+  Component(publisher, "Event Publisher", "Publishes notification events")
+}
+
+Rel(consumer, service_layer, "Calls business logic")
+Rel(service_layer, publisher, "Sends notification events")
+
+@enduml
